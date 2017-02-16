@@ -12,3 +12,9 @@ margin:20px;
 border:solid #FF5A5F 1px;
 border-radius:4px;
 }
+
+h2 {
+text-align:center;
+position:relative;
+bottom:20px;
+}
