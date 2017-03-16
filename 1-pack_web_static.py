@@ -5,7 +5,6 @@ from datetime import datetime
 import os
 import tarfile
 
-env.user = "ubuntu"
 
 def do_pack():
     """Creates a tgz achive of the directory"""
