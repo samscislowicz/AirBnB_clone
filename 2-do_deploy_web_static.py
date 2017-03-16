@@ -25,19 +25,23 @@ def do_pack():
 
 def do_deploy(archive_path):
     """distributes an archive to your web servers"""
-    try:
-        arch_name = archive_path.split('/')[-1][:-4]
-        folder = ("/data/web_static/release/" + arch_name)
+    if (os.path.isfile(archive_path) is False):
+        print("wtf")
+        return False
 
-        for hosts in env.hosts:
-            put("./{}".format(archive_path), "/tmp/")
-            run("mkdir -p {}/".format(folder))
-            run("tar -xzf /tmp/{}.tgz -C {}".format(arch_name, folder))
-            run("rm /tmp/{}.tgz".format(arch_name))
-            run("mv {}/web_static/* {}/".format(folder, folder))
-            run("rm -rf {}/web_static".format(folder))
-            run("rm -rf /data/web_static/current")
-            run("ln -s {}/ /data/web_static/current".format(folder))
-            return (True)
+    arch_name = archive_path.split('/')[-1]
+    folder = ("/data/web_static/release/" + arch_name.split(".")[0])
+    try:
+        put(archive_path, "/tmp/")
+        run("mkdir -p {}/".format(folder))
+        run("tar -xzf /tmp/{} -C {}".format(arch_name, folder))
+        run("rm /tmp/{}".format(arch_name))
+        run("mv {}/web_static/* {}/".format(folder, folder))
+        run("rm -rf {}/web_static".format(folder))
+        run("rm -rf /data/web_static/current")
+        run("ln -s {}/ /data/web_static/current".format(folder))
+        print("New version deployed!")
+        return (True)
     except:
+        print("Not Deployed")
         return (False)
