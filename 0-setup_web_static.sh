@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # This sets up a web server to the project requirements
-# First install nginx 
+# First install nginx
 sudo apt-get update
 sudo apt-get install -y nginx
 # Makes folders if they don't already exist
 sudo mkdir -p /data/web_static/releases/test/
+sudo mkdir /data/web_static/shared/
 # Creates a fake HTML file
 echo -e '<html><head></head><body>Holberton School</body></html>' | sudo tee /data/web_static/releases/test/index.html
 # Creates a symbolic link
